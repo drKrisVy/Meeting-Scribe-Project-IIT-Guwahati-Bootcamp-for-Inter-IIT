@@ -1,0 +1,65 @@
+# Meeting minutes
+
+- **File:** {{ audio_file }}
+- **Duration:** {{ duration | mmss }}
+- **Run:** {{ record.run_id }}
+- **Models:** speech-to-text `{{ record.models.stt }}`, refiner `{{ record.models.refiner }}`, documenter `{{ record.models.documenter }}`
+
+## Decisions
+
+### Agreed
+{% for d in agreed %}
+- **{{ d.id }}** {{ d.text }}
+{% for ev in d.evidence %}
+  - [{{ ev.t | mmss }}] "{{ ev.quote }}"
+{% endfor %}
+{% else %}
+- None
+{% endfor %}
+
+### Proposed, not agreed
+{% for d in proposed %}
+- **{{ d.id }}** {{ d.text }}
+{% for ev in d.evidence %}
+  - [{{ ev.t | mmss }}] "{{ ev.quote }}"
+{% endfor %}
+{% else %}
+- None
+{% endfor %}
+
+### Open questions
+{% for q in open_questions %}
+- **{{ q.id }}** {{ q.text }}
+{% for ev in q.evidence %}
+  - [{{ ev.t | mmss }}] "{{ ev.quote }}"
+{% endfor %}
+{% else %}
+- None
+{% endfor %}
+
+## Action items
+
+{% if record.action_items %}
+| ID | Task | Owner | Deadline | Status | Evidence |
+|----|------|-------|----------|--------|----------|
+{% for a in record.action_items %}
+| {{ a.id }} | {{ a.task | cell }} | {{ (a.owner or "Unspecified") | cell }} | {{ (a.deadline or "Unspecified") | cell }} | {{ a.commitment }} | {% for ev in a.evidence %}{{ ev.t | mmss }}{% if not loop.last %}, {% endif %}{% endfor %} |
+{% endfor %}
+{% else %}
+None
+{% endif %}
+
+## Needs review
+
+{% for item in flagged_items %}
+- **{{ item.id }}** {{ item.text or item.task }}: {{ item.flags | join("; ") }}
+{% endfor %}
+{% for item in record.unverified %}
+- **Unverified {{ item.id }}** {{ item.text or item.task }}: {{ item.flags | join("; ") }}
+{% endfor %}
+{% for e in flagged_edits %}
+- **Edit {{ e.edit_id }}** not applied ({{ e.rule }}): "{{ e.original }}" → "{{ e.replacement }}"
+{% endfor %}
+{% if not flagged_items and not record.unverified and not flagged_edits %}
+Nothing needs review.
+{% endif %}

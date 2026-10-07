@@ -1,0 +1,8 @@
+.env
+.venv/
+runs/
+__pycache__/
+*.wav
+*.m4a
+*.aiff
+.cache/
