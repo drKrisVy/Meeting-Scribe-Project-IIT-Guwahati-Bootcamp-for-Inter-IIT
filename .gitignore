@@ -6,3 +6,8 @@ __pycache__/
 *.m4a
 *.aiff
 .cache/
+*.zip
+edits_fakes.json
+refined_transcript_fakes.json
+record_fakes.json
+validate_out/

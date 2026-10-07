@@ -1,0 +1,7 @@
+groq
+python-dotenv
+rapidfuzz
+jellyfish
+jinja2
+markdown
+gradio
