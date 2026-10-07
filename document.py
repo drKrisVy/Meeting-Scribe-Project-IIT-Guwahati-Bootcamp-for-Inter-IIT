@@ -64,6 +64,51 @@ Return JSON only, in this shape:
  "open_questions": [{"id": "Q1", "text": "...", "evidence": [...]}]}"""
 
 
+STRUCTURE_PROMPT = """You split a meeting transcript into the topics it covered and write short minutes.
+Each line is [seg_id | time] text.
+
+For each topic, in order:
+- "topic": a short title (2-6 words)
+- "start_seg" and "end_seg": the first and last seg_id of the topic
+- "points": the key points, one plain sentence each. Every point needs evidence:
+  quotes copied word for word from the transcript, with their seg_id.
+
+Rules:
+- Only write what was said. No advice, no conclusions nobody stated.
+- A proposal is not a decision. Write "X was proposed" unless someone accepted it.
+- Keep numbers, names and negations exactly as spoken.
+- Greetings and small talk need no points. A short meeting can have one topic.
+
+Return JSON only:
+{"topics": [{"topic": "...", "start_seg": 0, "end_seg": 5,
+             "points": [{"text": "...", "evidence": [{"seg_id": 2, "quote": "..."}]}]}]}"""
+
+SUMMARY_PROMPT = """You write the summary at the top of a meeting record.
+
+You only get facts that were already checked against the transcript: topics with
+their minutes, decisions with their status, and action items.
+
+Write 3 to 5 plain sentences telling someone who missed the meeting what it was
+about, what was decided and what happens next.
+
+Rules:
+- Use only the facts given. Add nothing.
+- Say "agreed" only for agreed decisions; say "proposed" or "still open" for the rest.
+- Mention an owner or deadline only if the facts give one.
+- Copy names and numbers exactly.
+
+Return JSON only: {"summary": "..."}"""
+
+REPAIR_PROMPT = """Some items in a meeting record quote things that could not be found in the
+transcript. Each transcript line is [seg_id | time] text.
+
+For each item, either fix its evidence so every quote is copied word for word from
+the transcript with the right seg_id, keeping its other fields, or leave the item
+out if the transcript doesn't support it. Don't add items. Don't change ids.
+
+Return JSON only: {"items": [ ...the fixed items, same fields as given... ]}"""
+
+
 def format_time(seconds):
     minutes = int(seconds // 60)
     secs = int(seconds % 60)
@@ -77,8 +122,53 @@ def format_transcript(transcript):
     return "\n".join(lines)
 
 
+def number_items(draft):
+    for prefix, key in [("D", "decisions"), ("A", "action_items"), ("Q", "open_questions")]:
+        for i, item in enumerate(draft.get(key, []), start=1):
+            item["id"] = f"{prefix}{i}"
+    return draft
+
+
 def draft_record(transcript):
-    return chat_json(MODEL, SYSTEM_PROMPT, format_transcript(transcript))
+    text = format_transcript(transcript)
+    topics = chat_json(MODEL, STRUCTURE_PROMPT, text).get("topics", [])
+    draft = chat_json(MODEL, SYSTEM_PROMPT, text)
+    draft = {key: draft.get(key) or [] for key in ["decisions", "action_items", "open_questions"]}
+    draft["topics"] = topics
+    return number_items(draft)
+
+
+def repair(items, transcript):
+    user = ("ITEMS:\n" + json.dumps(items, indent=1)
+            + "\n\nTRANSCRIPT:\n" + format_transcript(transcript))
+    data = chat_json(MODEL, REPAIR_PROMPT, user)
+    ids = {item["id"] for item in items}
+    return [item for item in data.get("items", []) if item.get("id") in ids]
+
+
+def summary_facts(record):
+    lines = []
+    for topic in record["minutes"]:
+        lines.append(f"Topic: {topic['topic']}")
+        for point in topic["points"]:
+            lines.append(f"  - {point['text']}")
+    for d in record["decisions"]:
+        lines.append(f"Decision ({d['status']}): {d['text']}")
+    for a in record["action_items"]:
+        lines.append(f"Action ({a['commitment']}): {a['task']}; "
+                     f"owner: {a.get('owner') or 'not stated'}; "
+                     f"deadline: {a.get('deadline') or 'not stated'}")
+    for q in record["open_questions"]:
+        lines.append(f"Open question: {q['text']}")
+    return "\n".join(lines) or "Nothing was recorded."
+
+
+def write_summary(record, problems=None):
+    user = summary_facts(record)
+    if problems:
+        user += ("\n\nYour last summary had these problems: " + "; ".join(problems)
+                 + ". Only use names and numbers from the facts.")
+    return chat_json(MODEL, SUMMARY_PROMPT, user).get("summary", "").strip()
 
 
 if __name__ == "__main__":

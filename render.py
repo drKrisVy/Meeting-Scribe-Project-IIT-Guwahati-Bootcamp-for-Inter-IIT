@@ -31,11 +31,15 @@ def render_minutes(record, transcript, edits):
     open_questions += record["open_questions"]
 
     all_items = decisions + record["action_items"] + record["open_questions"]
-    flagged_items = [item for item in all_items if item.get("flags")]
+    flagged_items = []
+    for item in all_items:
+        flags = [f for f in item.get("flags", []) if f != "repaired"]
+        if flags:
+            flagged_items.append({**item, "flags": flags})
     flagged_edits = [e for e in edits if e["status"] == "flagged"]
 
     segments = transcript["segments"]
-    duration = segments[-1]["end"] if segments else 0
+    duration = transcript.get("audio", {}).get("duration_s") or (segments[-1]["end"] if segments else 0)
 
     template = env.get_template("minutes.md.j2")
     return template.render(

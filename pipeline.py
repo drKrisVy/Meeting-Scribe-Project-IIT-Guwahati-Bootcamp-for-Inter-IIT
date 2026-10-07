@@ -7,12 +7,12 @@ from datetime import datetime
 from pathlib import Path
 
 from document import MODEL as DOCUMENTER_MODEL
-from document import draft_record
+from document import draft_record, repair, write_summary
 from refine import MODEL as REFINER_MODEL
 from refine import refine
 from shape import build_transcript
 from transcribe import STT_MODEL, transcribe_long
-from verify import verify_record
+from verify import check_summary, verify_record
 from render import render_minutes
 from validate import validate
 from hallucination import filter_transcript
@@ -77,11 +77,18 @@ def run_pipeline(audio_path):
     t0 = time.perf_counter()
     draft = draft_record(refined)
     save_json(run_dir / "record_draft.json", draft)
-    checked = verify_record(draft, refined)
+    checked = verify_record(draft, refined, repair=lambda items: repair(items, refined))
+    summary = write_summary(checked)
+    problems = check_summary(summary, refined)
+    if problems:
+        summary = write_summary(checked, problems)
+        problems = check_summary(summary, refined)
     record = {
         "schema_version": "1.0",
         "run_id": run_id,
         "models": {"stt": STT_MODEL, "refiner": REFINER_MODEL, "documenter": DOCUMENTER_MODEL},
+        "summary": summary,
+        "summary_problems": problems,
         **checked,
         "warnings": audio["warnings"],
     }

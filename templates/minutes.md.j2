@@ -5,6 +5,27 @@
 - **Run:** {{ record.run_id }}
 - **Models:** speech-to-text `{{ record.models.stt }}`, refiner `{{ record.models.refiner }}`, documenter `{{ record.models.documenter }}`
 
+{% for w in record.warnings %}
+- **Note:** {{ w }}
+{% endfor %}
+
+## Summary
+
+{{ record.summary or "No summary could be written." }}
+
+## Minutes
+
+{% for topic in record.minutes %}
+### {{ topic.topic }} ({{ topic.start | mmss }}–{{ topic.end | mmss }})
+
+{% for point in topic.points %}
+- {{ point.text }} _[{% for ev in point.evidence %}{{ ev.t | mmss }}{% if not loop.last %}, {% endif %}{% endfor %}]_
+{% endfor %}
+
+{% else %}
+Nothing could be checked against the transcript.
+
+{% endfor %}
 ## Decisions
 
 ### Agreed
@@ -43,7 +64,7 @@
 | ID | Task | Owner | Deadline | Status | Evidence |
 |----|------|-------|----------|--------|----------|
 {% for a in record.action_items %}
-| {{ a.id }} | {{ a.task | cell }} | {{ (a.owner or "Unspecified") | cell }} | {{ (a.deadline or "Unspecified") | cell }} | {{ a.commitment }} | {% for ev in a.evidence %}{{ ev.t | mmss }}{% if not loop.last %}, {% endif %}{% endfor %} |
+| {{ a.id }} | {{ a.task | cell }} | {{ (a.owner or ("Unspecified (" ~ a.owner_note ~ ")" if a.owner_note else "Unspecified")) | cell }} | {{ (a.deadline or "Unspecified") | cell }} | {{ a.commitment }} | {% for ev in a.evidence %}{{ ev.t | mmss }}{% if not loop.last %}, {% endif %}{% endfor %} |
 {% endfor %}
 {% else %}
 None
@@ -51,15 +72,18 @@ None
 
 ## Needs review
 
+{% for problem in record.summary_problems %}
+- **Summary:** {{ problem }}
+{% endfor %}
 {% for item in flagged_items %}
 - **{{ item.id }}** {{ item.text or item.task }}: {{ item.flags | join("; ") }}
 {% endfor %}
 {% for item in record.unverified %}
-- **Unverified {{ item.id }}** {{ item.text or item.task }}: {{ item.flags | join("; ") }}
+- **Not found in transcript** ({{ item.kind | replace("_", " ") }}) {{ item.text or item.task }}: {{ item.flags | join("; ") }}
 {% endfor %}
 {% for e in flagged_edits %}
 - **Edit {{ e.edit_id }}** not applied ({{ e.rule }}): "{{ e.original }}" → "{{ e.replacement }}"
 {% endfor %}
-{% if not flagged_items and not record.unverified and not flagged_edits %}
+{% if not flagged_items and not record.unverified and not flagged_edits and not record.summary_problems %}
 Nothing needs review.
 {% endif %}

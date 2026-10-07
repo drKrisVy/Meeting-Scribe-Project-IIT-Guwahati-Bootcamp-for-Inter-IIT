@@ -1,15 +1,20 @@
+import copy
 import json
 import re
 import sys
 
-from rapidfuzz.fuzz import partial_ratio_alignment
+from rapidfuzz.fuzz import partial_ratio_alignment, token_set_ratio
+from rapidfuzz.utils import default_process
 
-from guardrails import normalize
+from guardrails import COMMON_WORDS, normalize, split_numbers
 
 QUOTE_MATCH_MIN = 90
 QUOTE_ELSEWHERE_MIN = 95
+SAME_ITEM_MIN = 85
 
 FIRST_PERSON = ["i'll", "i will", "let me", "i can take", "i can do", "i'm on it", "i am on it"]
+SENTENCE_STARTERS = {"someone", "everyone", "nobody", "the", "team", "next", "finally",
+                     "overall", "both", "after", "before", "later", "also"}
 ACCEPTANCE_WORDS = ["yes", "yeah", "yep", "okay", "ok", "sure", "agreed", "agree",
                     "decided", "sounds good", "let's do", "fine", "done", "will do",
                     "deal", "go ahead", "makes sense", "works for me"]
@@ -108,6 +113,9 @@ def verify_item(item, segments_by_id):
         if "acceptance" not in roles and not volunteered:
             item["commitment"] = "assigned"
             item["flags"].append("confirmed_without_acceptance")
+        elif volunteered and not item.get("owner"):
+            # "I'll take it", but without speaker labels we don't know who "I" is
+            item["owner_note"] = "someone volunteered"
 
     if item.get("commitment") == "assigned" and not item.get("owner"):
         item["commitment"] = "suggested"
@@ -116,9 +124,69 @@ def verify_item(item, segments_by_id):
     return item
 
 
-def verify_record(draft, transcript):
+def title(item):
+    return item.get("text") or item.get("task") or ""
+
+
+def is_duplicate(a, b):
+    # never merge "launch on the 15th" with "launch on the 16th"
+    if split_numbers(title(a))[0] != split_numbers(title(b))[0]:
+        return False
+    a_segs = {ev["seg_id"] for ev in a["evidence"]}
+    b_segs = {ev["seg_id"] for ev in b["evidence"]}
+    score = token_set_ratio(title(a), title(b), processor=default_process)
+    return bool(a_segs & b_segs) and score >= SAME_ITEM_MIN
+
+
+def merge_duplicates(items):
+    kept = []
+    for item in items:
+        twin = next((k for k in kept if is_duplicate(item, k)), None)
+        if twin is None:
+            kept.append(item)
+            continue
+        seen = {(ev["seg_id"], ev["quote"]) for ev in twin["evidence"]}
+        twin["evidence"] += [ev for ev in item["evidence"] if (ev["seg_id"], ev["quote"]) not in seen]
+    return kept
+
+
+def renumber(items, prefix):
+    for i, item in enumerate(items, start=1):
+        item["id"] = f"{prefix}{i}"
+    return items
+
+
+def verify_minutes(topics, segments_by_id, unverified):
+    minutes = []
+    for topic in topics:
+        points = []
+        for point in topic.get("points", []):
+            verify_item(point, segments_by_id)
+            if point["verified"]:
+                points.append(point)
+            else:
+                point["kind"] = "minutes"
+                unverified.append(point)
+        if not points:
+            continue
+        first = min(ev["seg_id"] for p in points for ev in p["evidence"])
+        last = max(ev["seg_id"] for p in points for ev in p["evidence"])
+        start_seg = topic.get("start_seg") if topic.get("start_seg") in segments_by_id else first
+        end_seg = topic.get("end_seg") if topic.get("end_seg") in segments_by_id else last
+        minutes.append({
+            "topic": topic.get("topic") or "Discussion",
+            "start": segments_by_id[min(start_seg, first)]["start"],
+            "end": segments_by_id[max(end_seg, last)]["end"],
+            "points": merge_duplicates(points),
+        })
+    return minutes
+
+
+def verify_record(draft, transcript, repair=None):
     segments_by_id = {seg["seg_id"]: seg for seg in transcript["segments"]}
     record = {"decisions": [], "action_items": [], "open_questions": [], "unverified": []}
+    originals = copy.deepcopy(draft)
+    failed = []
 
     for key in ["decisions", "action_items", "open_questions"]:
         for item in draft.get(key, []):
@@ -126,10 +194,56 @@ def verify_record(draft, transcript):
             if item["verified"]:
                 record[key].append(item)
             else:
-                item["kind"] = key
-                record["unverified"].append(item)
+                failed.append((key, item))
 
+    # one more chance: send the failed items back once and check them again
+    if failed and repair:
+        by_id = {i["id"]: i for k in ["decisions", "action_items", "open_questions"]
+                 for i in originals.get(k, [])}
+        fixed = {i["id"]: i for i in repair([by_id[item["id"]] for _, item in failed])}
+        still_failed = []
+        for key, item in failed:
+            new = fixed.get(item["id"])
+            if new and verify_item(new, segments_by_id)["verified"]:
+                new["flags"].append("repaired")
+                record[key].append(new)
+            else:
+                still_failed.append((key, item))
+        failed = still_failed
+
+    for key, item in failed:
+        item["kind"] = key
+        record["unverified"].append(item)
+
+    record["minutes"] = verify_minutes(draft.get("topics", []), segments_by_id, record["unverified"])
+
+    for prefix, key in [("D", "decisions"), ("A", "action_items"), ("Q", "open_questions")]:
+        record[key] = renumber(merge_duplicates(record[key]), prefix)
     return record
+
+
+def check_summary(summary, transcript):
+    # every number and every name in the summary has to be in the transcript
+    if not summary:
+        return ["the summary is empty"]
+    said = " ".join(seg["text"] for seg in transcript["segments"])
+    said_words = set(normalize(said).split())
+    said_numbers = set(split_numbers(said)[0])
+    problems = []
+
+    for value in split_numbers(summary)[0]:
+        if value not in said_numbers:
+            problems.append(f"{value:g} was never said")
+
+    for sentence in re.split(r"(?<=[.!?])\s+", summary):
+        for i, word in enumerate(re.findall(r"\b[A-Z][a-zA-Z]+\b", sentence)):
+            lower = word.lower()
+            first_word = i == 0 and sentence.startswith(word)
+            if first_word and (lower in COMMON_WORDS or lower in SENTENCE_STARTERS):
+                continue
+            if lower not in said_words:
+                problems.append(f"{word} was never said")
+    return problems
 
 
 def fake_draft():
