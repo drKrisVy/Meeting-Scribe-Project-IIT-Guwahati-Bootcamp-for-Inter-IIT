@@ -11,7 +11,7 @@ from document import draft_record
 from refine import MODEL as REFINER_MODEL
 from refine import refine
 from shape import build_transcript
-from transcribe import STT_MODEL, transcribe
+from transcribe import STT_MODEL, transcribe_long
 from verify import verify_record
 from render import render_minutes
 from validate import validate
@@ -48,13 +48,16 @@ def run_pipeline(audio_path):
                        f"in {time.perf_counter() - t0:.1f}s")
 
     t0 = time.perf_counter()
-    groq_data = transcribe(audio["decoded"])
+    groq_data = transcribe_long(audio, run_dir / "input")
     save_json(run_dir / "groq_response.json", groq_data)
     raw = build_transcript(groq_data)
     raw["run_id"] = run_id
     raw["audio"] = {"file": audio_path.name, "duration_s": audio["duration"]}
     save_json(run_dir / "raw_transcript.json", raw)
-    yield "transcribe", f"{len(raw['segments'])} segments in {time.perf_counter() - t0:.1f}s"
+    pieces = len(groq_data["chunks"])
+    yield "transcribe", (f"{len(raw['segments'])} segments"
+                         f"{f' from {pieces} pieces' if pieces > 1 else ''} "
+                         f"in {time.perf_counter() - t0:.1f}s")
 
     t0 = time.perf_counter()
     edits, refined = refine(raw)

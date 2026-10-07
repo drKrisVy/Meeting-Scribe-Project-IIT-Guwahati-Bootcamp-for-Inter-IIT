@@ -5,6 +5,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from groq import Groq
 
+from chunks import make_pieces
+
 load_dotenv()
 client = Groq()
 
@@ -22,6 +24,25 @@ def transcribe(audio_path):
         timestamp_granularities=["word", "segment"],
     )
     return result.model_dump()
+
+
+def shift(items, offset):
+    for item in items:
+        item["start"] = round(item["start"] + offset, 3)
+        item["end"] = round(item["end"] + offset, 3)
+    return items
+
+
+def transcribe_long(audio, out_dir):
+    pieces = make_pieces(audio, out_dir)
+    merged = {"segments": [], "words": [], "chunks": []}
+    for path, offset in pieces:
+        data = transcribe(path)
+        # each piece starts at 0 s, so move its times back onto the full recording
+        merged["segments"] += shift(data.get("segments") or [], offset)
+        merged["words"] += shift(data.get("words") or [], offset)
+        merged["chunks"].append({"file": Path(path).name, "start": offset})
+    return merged
 
 
 if __name__ == "__main__":
