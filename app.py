@@ -7,9 +7,10 @@ import gradio as gr
 
 from pipeline import run_pipeline
 from render import format_time
+from validate import AudioError
 
-STAGES = ["transcribe", "refine", "document", "export"]
-STAGE_NAMES = {"transcribe": "Transcribe", "refine": "Refine",
+STAGES = ["validate", "transcribe", "refine", "document", "export"]
+STAGE_NAMES = {"validate": "Validate", "transcribe": "Transcribe", "refine": "Refine",
                "document": "Document", "export": "Export"}
 
 
@@ -83,7 +84,7 @@ def process(audio_path):
         yield ("Upload an audio file first.", *empty)
         return
 
-    running = "transcribe"
+    running = "validate"
     yield (status_markdown(done, running), *empty)
 
     try:
@@ -98,6 +99,9 @@ def process(audio_path):
             next_index = STAGES.index(stage) + 1
             running = STAGES[next_index] if next_index < len(STAGES) else None
             yield (status_markdown(done, running), *empty)
+    except AudioError as error:
+        yield (status_markdown(done, failed=running) + f"\n\n**{error.message}**", *empty)
+        return
     except Exception as error:
         yield (status_markdown(done, failed=running) + f"\n\n**Error:** {error}", *empty)
         return
@@ -126,7 +130,7 @@ with gr.Blocks(title="Meeting Scribe") as demo:
 
     with gr.Row():
         with gr.Column(scale=1):
-            audio = gr.Audio(type="filepath", label="Meeting recording")
+            audio = gr.File(type="filepath", label="Meeting recording (audio or video)")
             run_button = gr.Button("Process", variant="primary")
             status = gr.Markdown(status_markdown({}))
 

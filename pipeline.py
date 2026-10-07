@@ -14,6 +14,7 @@ from shape import build_transcript
 from transcribe import STT_MODEL, transcribe
 from verify import verify_record
 from render import render_minutes
+from validate import validate
 
 RUNS_DIR = Path("runs")
 
@@ -42,11 +43,16 @@ def run_pipeline(audio_path):
     yield "start", f"run {run_id}"
 
     t0 = time.perf_counter()
-    groq_data = transcribe(audio_path)
+    audio = validate(run_dir / "input" / audio_path.name, run_dir / "input")
+    yield "validate", (f"{audio['duration'] / 60:.1f} min, {audio['speech_ratio']:.0%} not silent "
+                       f"in {time.perf_counter() - t0:.1f}s")
+
+    t0 = time.perf_counter()
+    groq_data = transcribe(audio["decoded"])
     save_json(run_dir / "groq_response.json", groq_data)
     raw = build_transcript(groq_data)
     raw["run_id"] = run_id
-    raw["audio"] = {"file": audio_path.name}
+    raw["audio"] = {"file": audio_path.name, "duration_s": audio["duration"]}
     save_json(run_dir / "raw_transcript.json", raw)
     yield "transcribe", f"{len(raw['segments'])} segments in {time.perf_counter() - t0:.1f}s"
 
@@ -66,6 +72,7 @@ def run_pipeline(audio_path):
         "run_id": run_id,
         "models": {"stt": STT_MODEL, "refiner": REFINER_MODEL, "documenter": DOCUMENTER_MODEL},
         **checked,
+        "warnings": audio["warnings"],
     }
     save_json(run_dir / "record.json", record)
     yield "document", (f"{len(record['decisions'])} decisions, "
