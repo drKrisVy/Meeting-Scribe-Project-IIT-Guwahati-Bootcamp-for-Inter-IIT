@@ -159,7 +159,39 @@ def check_sound(original, replacement):
         return "not_phonetic"
     return None
 
-def check_edit(edit, segments_by_id):
+COMMON_WORDS = set("""
+a an the and or but if of to in on at by for with from as into about over under
+is are was were be been am do does did have has had it its it's this that these those
+there their they them we us our you your he she him her his i me my
+what which who when where why how all any some no not more less up down out off
+then than so too very just also only now here new old one two get got go make take
+""".split())
+
+
+def build_support(transcript, terms):
+    # every word a replacement is allowed to use
+    words = set(COMMON_WORDS)
+    for seg in transcript["segments"]:
+        words.update(normalize(seg["text"]).split())
+    for term in terms:
+        words.update(normalize(term["canonical"]).split())
+    return words
+
+
+def check_supported(original, replacement, support):
+    if support is None:
+        return None
+    # "kuberneteslogs" -> "kubernetes logs" only moves a space
+    if normalize(original).replace(" ", "") == normalize(replacement).replace(" ", ""):
+        return None
+    original_words = set(normalize(original).split())
+    for word in normalize(replacement).split():
+        if word not in original_words and word not in support:
+            return "unsupported_term"
+    return None
+
+
+def check_edit(edit, segments_by_id, support=None):
     seg = segments_by_id.get(edit.get("seg_id"))
     if seg is None:
         return "unknown_segment"
@@ -184,7 +216,11 @@ def check_edit(edit, segments_by_id):
     if rule:
         return rule
 
-    return check_sound(original, replacement)
+    rule = check_sound(original, replacement)
+    if rule:
+        return rule
+
+    return check_supported(original, replacement, support)
 
 
 def run_tests(check, tests):
@@ -222,6 +258,15 @@ if __name__ == "__main__":
         ("get hub", "GitHub", None),
         ("a p i", "API", None),
         ("move to launch", "move the launch", None),
+    ])
+
+    print("\nSupported term checks")
+    support = {"the", "budget", "review", "kubernetes", "priya"}
+    run_tests(lambda a, b: check_supported(a, b, support), [
+        ("cube and eighties", "Kubernetes", None),
+        ("pria", "Priya", None),
+        ("budget", "budgets", "unsupported_term"),
+        ("kuberneteslogs", "kubernetes logs", None),
     ])
 
     print("\nKnown weakness (passes but shouldn't):")

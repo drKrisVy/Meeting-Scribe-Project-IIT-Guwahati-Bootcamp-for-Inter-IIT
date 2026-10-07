@@ -67,11 +67,12 @@ def run_pipeline(audio_path):
                          f"in {time.perf_counter() - t0:.1f}s")
 
     t0 = time.perf_counter()
-    edits, refined = refine(raw)
-    save_json(run_dir / "edits.json", {"edits": edits})
+    edits, refined, inventory = refine(raw)
+    save_json(run_dir / "edits.json", {"inventory": inventory, "edits": edits})
     save_json(run_dir / "refined_transcript.json", refined)
     accepted = sum(1 for e in edits if e["status"] == "accepted")
-    yield "refine", f"{accepted} of {len(edits)} edits accepted in {time.perf_counter() - t0:.1f}s"
+    yield "refine", (f"{len(inventory['terms'])} terms, {accepted} of {len(edits)} edits accepted "
+                     f"in {time.perf_counter() - t0:.1f}s")
 
     t0 = time.perf_counter()
     draft = draft_record(refined)
