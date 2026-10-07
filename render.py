@@ -3,7 +3,21 @@ import re
 import sys
 from pathlib import Path
 
+import markdown
 from jinja2 import Environment, FileSystemLoader
+
+HTML_PAGE = """<!doctype html>
+<html><head><meta charset="utf-8"><title>Meeting minutes</title>
+<style>
+body {{ font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 780px;
+       margin: 32px auto; padding: 0 16px; line-height: 1.5; color: #1d1d1f; }}
+h2 {{ border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-top: 28px; }}
+table {{ border-collapse: collapse; width: 100%; font-size: 13px; }}
+th, td {{ border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }}
+th {{ background: #f4f4f6; }}
+</style></head><body>
+{body}
+</body></html>"""
 
 
 def format_time(seconds):
@@ -52,6 +66,24 @@ def render_minutes(record, transcript, edits):
         flagged_items=flagged_items,
         flagged_edits=flagged_edits,
     )
+
+
+def export_minutes(run_dir, record, transcript, edits):
+    text = render_minutes(record, transcript, edits)
+    (run_dir / "minutes.md").write_text(text)
+
+    html = HTML_PAGE.format(body=markdown.markdown(text, extensions=["tables"]))
+    (run_dir / "minutes.html").write_text(html)
+    made = ["minutes.md", "minutes.html"]
+
+    # pdf needs weasyprint, which isn't always installed (see README)
+    try:
+        from weasyprint import HTML
+        HTML(string=html).write_pdf(str(run_dir / "minutes.pdf"))
+        made.append("minutes.pdf")
+    except Exception:
+        pass
+    return made
 
 
 def check_ids(markdown, record):
