@@ -15,6 +15,7 @@ from transcribe import STT_MODEL, transcribe_long
 from verify import verify_record
 from render import render_minutes
 from validate import validate
+from hallucination import filter_transcript
 
 RUNS_DIR = Path("runs")
 
@@ -51,6 +52,12 @@ def run_pipeline(audio_path):
     groq_data = transcribe_long(audio, run_dir / "input")
     save_json(run_dir / "groq_response.json", groq_data)
     raw = build_transcript(groq_data)
+    stt_log = filter_transcript(raw)
+    stt_log["chunks"] = groq_data["chunks"]
+    save_json(run_dir / "stt_log.json", stt_log)
+    if stt_log["removed"]:
+        audio["warnings"].append(f"Removed {stt_log['removed']} bits that looked like Whisper "
+                                 "hallucinations (see stt_log.json).")
     raw["run_id"] = run_id
     raw["audio"] = {"file": audio_path.name, "duration_s": audio["duration"]}
     save_json(run_dir / "raw_transcript.json", raw)
