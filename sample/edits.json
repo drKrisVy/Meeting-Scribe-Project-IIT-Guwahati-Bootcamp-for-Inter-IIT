@@ -1,0 +1,133 @@
+{
+  "inventory": {
+    "terms": [
+      {
+        "canonical": "Hackathon",
+        "variants_heard": [
+          "Hekthon"
+        ],
+        "kind": "tech"
+      },
+      {
+        "canonical": "Firebase",
+        "variants_heard": [
+          "firebase"
+        ],
+        "kind": "product"
+      },
+      {
+        "canonical": "React",
+        "variants_heard": [
+          "react"
+        ],
+        "kind": "product"
+      },
+      {
+        "canonical": "Vercel",
+        "variants_heard": [
+          "Vercel"
+        ],
+        "kind": "product"
+      },
+      {
+        "canonical": "API",
+        "variants_heard": [
+          "API"
+        ],
+        "kind": "acronym"
+      },
+      {
+        "canonical": "GitHub",
+        "variants_heard": [
+          "GitHub"
+        ],
+        "kind": "product"
+      },
+      {
+        "canonical": "Wi\u2011Fi",
+        "variants_heard": [
+          "wifi"
+        ],
+        "kind": "tech"
+      },
+      {
+        "canonical": "Rahul",
+        "variants_heard": [
+          "Rahul"
+        ],
+        "kind": "person"
+      },
+      {
+        "canonical": "Sneha",
+        "variants_heard": [
+          "Sneha"
+        ],
+        "kind": "person"
+      }
+    ],
+    "proposed": 9,
+    "kept": 9
+  },
+  "edits": [
+    {
+      "seg_id": 0,
+      "start_word": 8,
+      "end_word": 9,
+      "original": "Hekthon",
+      "replacement": "Hackathon",
+      "reason": "misspelled term",
+      "source": "llm",
+      "edit_id": "e1",
+      "status": "accepted",
+      "rule": null
+    },
+    {
+      "seg_id": 2,
+      "start_word": 8,
+      "end_word": 9,
+      "original": "firebase",
+      "replacement": "Firebase",
+      "reason": "term spelling/capitalization",
+      "source": "llm",
+      "edit_id": "e2",
+      "status": "accepted",
+      "rule": null
+    },
+    {
+      "seg_id": 5,
+      "start_word": 6,
+      "end_word": 7,
+      "original": "react",
+      "replacement": "React",
+      "reason": "term spelling/capitalization",
+      "source": "llm",
+      "edit_id": "e3",
+      "status": "accepted",
+      "rule": null
+    },
+    {
+      "seg_id": 6,
+      "start_word": 1,
+      "end_word": 2,
+      "original": "react",
+      "replacement": "React",
+      "reason": "term spelling/capitalization",
+      "source": "llm",
+      "edit_id": "e4",
+      "status": "accepted",
+      "rule": null
+    },
+    {
+      "seg_id": 13,
+      "start_word": 6,
+      "end_word": 7,
+      "original": "wifi",
+      "replacement": "Wi-Fi",
+      "reason": "term spelling",
+      "source": "llm",
+      "edit_id": "e5",
+      "status": "accepted",
+      "rule": null
+    }
+  ]
+}

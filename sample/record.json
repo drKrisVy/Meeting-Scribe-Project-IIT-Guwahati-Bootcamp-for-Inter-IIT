@@ -1,0 +1,335 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-10-08T19-22-40_966a9f",
+  "models": {
+    "stt": "whisper-large-v3-turbo",
+    "refiner": "openai/gpt-oss-120b",
+    "documenter": "openai/gpt-oss-120b"
+  },
+  "summary": "The meeting covered venue capacity, registration setup, frontend technology, login page timing, API readiness, Wi\u2011Fi, poster creation, and prize format. It was agreed to use React for the frontend and host it on Vercel, while using Firebase for registrations and skipping the login page this week remain proposed. Rahul will finish the API and push it to GitHub by Friday, Sneha will create the poster by Wednesday, and the Wi\u2011Fi in the hall will be checked. The decision on whether prizes will be cash or vouchers is still open and will be decided at the next meeting.",
+  "summary_problems": [],
+  "decisions": [
+    {
+      "id": "D1",
+      "text": "Use Firebase for registrations",
+      "status": "proposed",
+      "evidence": [
+        {
+          "seg_id": 2,
+          "role": "statement",
+          "quote": "what if we use Firebase for registrations?",
+          "t": 12.08
+        }
+      ],
+      "flags": [],
+      "verified": true
+    },
+    {
+      "id": "D2",
+      "text": "Use React for frontend and host on Vercel",
+      "status": "agreed",
+      "evidence": [
+        {
+          "seg_id": 5,
+          "role": "statement",
+          "quote": "For the frontend, let's go with React and hosted on Vercel. Yes",
+          "t": 25.68
+        },
+        {
+          "seg_id": 6,
+          "role": "acceptance",
+          "quote": "agreed, React and Vercel.",
+          "t": 30.4
+        }
+      ],
+      "flags": [],
+      "verified": true
+    },
+    {
+      "id": "D3",
+      "text": "Do not add a login page this week",
+      "status": "proposed",
+      "evidence": [
+        {
+          "seg_id": 8,
+          "role": "statement",
+          "quote": "Let's not, there isn't enough time.",
+          "t": 36.56
+        }
+      ],
+      "flags": [
+        "agreed_without_acceptance"
+      ],
+      "verified": true
+    }
+  ],
+  "action_items": [
+    {
+      "id": "A1",
+      "task": "Finish the API and push it to GitHub",
+      "owner": "Rahul",
+      "deadline": "by Friday",
+      "commitment": "confirmed",
+      "evidence": [
+        {
+          "seg_id": 11,
+          "role": "assignment",
+          "quote": "Rahul, can you finish the API and push it to GitHub by Friday?",
+          "t": 46.56
+        },
+        {
+          "seg_id": 12,
+          "role": "statement",
+          "quote": "Yes, I'll do that, says Rahul.",
+          "t": 51.92
+        }
+      ],
+      "flags": [],
+      "verified": true
+    },
+    {
+      "id": "A2",
+      "task": "Check if the Wi-Fi in the hall works",
+      "owner": null,
+      "deadline": null,
+      "commitment": "suggested",
+      "evidence": [
+        {
+          "seg_id": 13,
+          "role": "statement",
+          "quote": "Someone should check if the Wi-Fi in the hall works.",
+          "t": 54.24
+        }
+      ],
+      "flags": [],
+      "verified": true
+    },
+    {
+      "id": "A3",
+      "task": "Make the poster",
+      "owner": "Sneha",
+      "deadline": "by Wednesday",
+      "commitment": "assigned",
+      "evidence": [
+        {
+          "seg_id": 14,
+          "role": "assignment",
+          "quote": "Sneha, please make the poster by Wednesday.",
+          "t": 61.24
+        }
+      ],
+      "flags": [],
+      "verified": true
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "Q1",
+      "text": "Give prizes in cash or vouchers",
+      "evidence": [
+        {
+          "seg_id": 15,
+          "role": "statement",
+          "quote": "And do we give prizes in cash or vouchers?",
+          "t": 65.24
+        },
+        {
+          "seg_id": 16,
+          "role": "statement",
+          "quote": "Let's decide that next meeting.",
+          "t": 68.24
+        }
+      ],
+      "flags": [],
+      "verified": true
+    }
+  ],
+  "unverified": [],
+  "minutes": [
+    {
+      "topic": "Venue and registration setup",
+      "start": 0.0,
+      "end": 17.64,
+      "points": [
+        {
+          "text": "The hall has 60 seats.",
+          "evidence": [
+            {
+              "seg_id": 1,
+              "quote": "I checked the hall, it has 50 seats, sorry 60 seats.",
+              "t": 7.28
+            }
+          ],
+          "flags": [],
+          "verified": true
+        },
+        {
+          "text": "Firebase was proposed for registrations.",
+          "evidence": [
+            {
+              "seg_id": 2,
+              "quote": "Good. For the website, what if we use Firebase for registrations?",
+              "t": 12.08
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "topic": "Frontend technology",
+      "start": 25.68,
+      "end": 33.54,
+      "points": [
+        {
+          "text": "React and Vercel were chosen for the frontend.",
+          "evidence": [
+            {
+              "seg_id": 5,
+              "quote": "For the frontend, let's go with React and hosted on Vercel. Yes",
+              "t": 25.68
+            },
+            {
+              "seg_id": 6,
+              "quote": "agreed, React and Vercel. Should",
+              "t": 30.4
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "topic": "Login page decision",
+      "start": 33.54,
+      "end": 41.98,
+      "points": [
+        {
+          "text": "A login page will not be added this week due to time constraints.",
+          "evidence": [
+            {
+              "seg_id": 8,
+              "quote": "Let's not, there isn't enough time.",
+              "t": 36.56
+            },
+            {
+              "seg_id": 9,
+              "quote": "Fine, no login this week.",
+              "t": 39.56
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "topic": "API and registration timing",
+      "start": 41.98,
+      "end": 54.24,
+      "points": [
+        {
+          "text": "Registrations cannot open until the API is ready.",
+          "evidence": [
+            {
+              "seg_id": 10,
+              "quote": "We also can't open registrations until API is ready.",
+              "t": 41.98
+            }
+          ],
+          "flags": [],
+          "verified": true
+        },
+        {
+          "text": "Rahul was asked to finish the API and push it to GitHub by Friday.",
+          "evidence": [
+            {
+              "seg_id": 11,
+              "quote": "Rahul, can you finish the API and push it to GitHub by Friday?",
+              "t": 46.56
+            }
+          ],
+          "flags": [],
+          "verified": true
+        },
+        {
+          "text": "Rahul confirmed he will do it.",
+          "evidence": [
+            {
+              "seg_id": 12,
+              "quote": "Yes, I'll do that, says Rahul.",
+              "t": 51.92
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "topic": "Wi\u2011Fi check",
+      "start": 54.24,
+      "end": 61.24,
+      "points": [
+        {
+          "text": "Someone should check if the Wi\u2011Fi in the hall works.",
+          "evidence": [
+            {
+              "seg_id": 13,
+              "quote": "Rahul. Someone should check if the Wi-Fi in the hall works.",
+              "t": 54.24
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "topic": "Poster creation",
+      "start": 61.24,
+      "end": 65.24,
+      "points": [
+        {
+          "text": "Sneha was asked to make the poster by Wednesday.",
+          "evidence": [
+            {
+              "seg_id": 14,
+              "quote": "Sneha, please make the poster by Wednesday.",
+              "t": 61.24
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    },
+    {
+      "topic": "Prize format decision",
+      "start": 65.24,
+      "end": 70.24,
+      "points": [
+        {
+          "text": "The choice between cash or voucher prizes will be decided at the next meeting.",
+          "evidence": [
+            {
+              "seg_id": 15,
+              "quote": "And do we give prizes in cash or vouchers?",
+              "t": 65.24
+            },
+            {
+              "seg_id": 16,
+              "quote": "Let's decide that next meeting.",
+              "t": 68.24
+            }
+          ],
+          "flags": [],
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

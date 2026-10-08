@@ -1,0 +1,993 @@
+{
+  "schema_version": "1.0",
+  "segments": [
+    {
+      "seg_id": 0,
+      "start": 0.0,
+      "end": 7.28,
+      "text": "Ok, let's start. We need to plan the Hekthon setup for next week.",
+      "speaker": null,
+      "avg_logprob": -0.2807134,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.4408603,
+      "words": [
+        {
+          "w": "Ok,",
+          "start": 0.98,
+          "end": 1.88
+        },
+        {
+          "w": "let's",
+          "start": 1.88,
+          "end": 2.02
+        },
+        {
+          "w": "start.",
+          "start": 2.02,
+          "end": 2.58
+        },
+        {
+          "w": "We",
+          "start": 2.58,
+          "end": 3.3
+        },
+        {
+          "w": "need",
+          "start": 3.3,
+          "end": 3.4
+        },
+        {
+          "w": "to",
+          "start": 3.4,
+          "end": 3.58
+        },
+        {
+          "w": "plan",
+          "start": 3.58,
+          "end": 3.84
+        },
+        {
+          "w": "the",
+          "start": 3.84,
+          "end": 4.04
+        },
+        {
+          "w": "Hekthon",
+          "start": 4.04,
+          "end": 4.5
+        },
+        {
+          "w": "setup",
+          "start": 4.5,
+          "end": 4.92
+        },
+        {
+          "w": "for",
+          "start": 4.92,
+          "end": 5.24
+        },
+        {
+          "w": "next",
+          "start": 5.24,
+          "end": 5.5
+        },
+        {
+          "w": "week.",
+          "start": 5.5,
+          "end": 6.38
+        }
+      ]
+    },
+    {
+      "seg_id": 1,
+      "start": 7.28,
+      "end": 12.08,
+      "text": "I checked the hall, it has 50 seats, sorry 60 seats.",
+      "speaker": null,
+      "avg_logprob": -0.2807134,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.4408603,
+      "words": [
+        {
+          "w": "I",
+          "start": 7.18,
+          "end": 7.44
+        },
+        {
+          "w": "checked",
+          "start": 7.44,
+          "end": 7.78
+        },
+        {
+          "w": "the",
+          "start": 7.78,
+          "end": 7.94
+        },
+        {
+          "w": "hall,",
+          "start": 7.94,
+          "end": 8.36
+        },
+        {
+          "w": "it",
+          "start": 8.36,
+          "end": 8.48
+        },
+        {
+          "w": "has",
+          "start": 8.48,
+          "end": 8.62
+        },
+        {
+          "w": "50",
+          "start": 8.62,
+          "end": 8.86
+        },
+        {
+          "w": "seats,",
+          "start": 8.86,
+          "end": 9.46
+        },
+        {
+          "w": "sorry",
+          "start": 9.46,
+          "end": 10.02
+        },
+        {
+          "w": "60",
+          "start": 10.02,
+          "end": 10.4
+        },
+        {
+          "w": "seats.",
+          "start": 10.4,
+          "end": 11.42
+        }
+      ]
+    },
+    {
+      "seg_id": 2,
+      "start": 12.08,
+      "end": 17.64,
+      "text": "Good. For the website, what if we use firebase for registrations?",
+      "speaker": null,
+      "avg_logprob": -0.2807134,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.4408603,
+      "words": [
+        {
+          "w": "Good.",
+          "start": 11.98,
+          "end": 12.74
+        },
+        {
+          "w": "For",
+          "start": 12.74,
+          "end": 13.18
+        },
+        {
+          "w": "the",
+          "start": 13.18,
+          "end": 13.3
+        },
+        {
+          "w": "website,",
+          "start": 13.3,
+          "end": 13.92
+        },
+        {
+          "w": "what",
+          "start": 13.92,
+          "end": 14.38
+        },
+        {
+          "w": "if",
+          "start": 14.38,
+          "end": 14.54
+        },
+        {
+          "w": "we",
+          "start": 14.54,
+          "end": 14.7
+        },
+        {
+          "w": "use",
+          "start": 14.7,
+          "end": 14.98
+        },
+        {
+          "w": "firebase",
+          "start": 14.98,
+          "end": 15.64
+        },
+        {
+          "w": "for",
+          "start": 15.64,
+          "end": 15.88
+        },
+        {
+          "w": "registrations?",
+          "start": 15.88,
+          "end": 16.88
+        }
+      ]
+    },
+    {
+      "seg_id": 3,
+      "start": 17.64,
+      "end": 22.48,
+      "text": "Hmm, maybe. I am not sure about the free limits.",
+      "speaker": null,
+      "avg_logprob": -0.2807134,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.4408603,
+      "words": [
+        {
+          "w": "Hmm,",
+          "start": 17.6,
+          "end": 18.04
+        },
+        {
+          "w": "maybe.",
+          "start": 18.04,
+          "end": 19.02
+        },
+        {
+          "w": "I",
+          "start": 19.02,
+          "end": 19.64
+        },
+        {
+          "w": "am",
+          "start": 19.64,
+          "end": 19.76
+        },
+        {
+          "w": "not",
+          "start": 19.76,
+          "end": 19.92
+        },
+        {
+          "w": "sure",
+          "start": 19.92,
+          "end": 20.2
+        },
+        {
+          "w": "about",
+          "start": 20.2,
+          "end": 20.54
+        },
+        {
+          "w": "the",
+          "start": 20.54,
+          "end": 20.8
+        },
+        {
+          "w": "free",
+          "start": 20.8,
+          "end": 20.92
+        },
+        {
+          "w": "limits.",
+          "start": 20.92,
+          "end": 21.96
+        }
+      ]
+    },
+    {
+      "seg_id": 4,
+      "start": 22.48,
+      "end": 25.68,
+      "text": "Ok, let's think about that later.",
+      "speaker": null,
+      "avg_logprob": -0.2807134,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.4408603,
+      "words": [
+        {
+          "w": "Ok,",
+          "start": 21.98,
+          "end": 23.08
+        },
+        {
+          "w": "let's",
+          "start": 23.08,
+          "end": 23.44
+        },
+        {
+          "w": "think",
+          "start": 23.44,
+          "end": 23.62
+        },
+        {
+          "w": "about",
+          "start": 23.62,
+          "end": 23.84
+        },
+        {
+          "w": "that",
+          "start": 23.84,
+          "end": 24.1
+        },
+        {
+          "w": "later.",
+          "start": 24.1,
+          "end": 24.84
+        }
+      ]
+    },
+    {
+      "seg_id": 5,
+      "start": 25.68,
+      "end": 30.4,
+      "text": "For the frontend, let's go with react and hosted on Vercel.",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "For",
+          "start": 25.68,
+          "end": 25.7
+        },
+        {
+          "w": "the",
+          "start": 25.7,
+          "end": 25.82
+        },
+        {
+          "w": "frontend,",
+          "start": 25.82,
+          "end": 26.82
+        },
+        {
+          "w": "let's",
+          "start": 26.82,
+          "end": 27.0
+        },
+        {
+          "w": "go",
+          "start": 27.0,
+          "end": 27.16
+        },
+        {
+          "w": "with",
+          "start": 27.16,
+          "end": 27.32
+        },
+        {
+          "w": "react",
+          "start": 27.32,
+          "end": 27.74
+        },
+        {
+          "w": "and",
+          "start": 27.74,
+          "end": 28.08
+        },
+        {
+          "w": "hosted",
+          "start": 28.08,
+          "end": 28.42
+        },
+        {
+          "w": "on",
+          "start": 28.42,
+          "end": 28.68
+        },
+        {
+          "w": "Vercel.",
+          "start": 28.68,
+          "end": 29.32
+        },
+        {
+          "w": "Yes",
+          "start": 30.12,
+          "end": 30.48
+        }
+      ]
+    },
+    {
+      "seg_id": 6,
+      "start": 30.4,
+      "end": 33.54,
+      "text": "Yes agreed, react and Vercel.",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "agreed,",
+          "start": 30.48,
+          "end": 31.18
+        },
+        {
+          "w": "react",
+          "start": 31.18,
+          "end": 31.74
+        },
+        {
+          "w": "and",
+          "start": 31.74,
+          "end": 31.98
+        },
+        {
+          "w": "Vercel.",
+          "start": 31.98,
+          "end": 32.54
+        },
+        {
+          "w": "Should",
+          "start": 33.24,
+          "end": 33.56
+        }
+      ]
+    },
+    {
+      "seg_id": 7,
+      "start": 33.54,
+      "end": 36.56,
+      "text": "Should we also add a login page this week?",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "we",
+          "start": 33.56,
+          "end": 33.7
+        },
+        {
+          "w": "also",
+          "start": 33.7,
+          "end": 34.0
+        },
+        {
+          "w": "add",
+          "start": 34.0,
+          "end": 34.22
+        },
+        {
+          "w": "a",
+          "start": 34.22,
+          "end": 34.34
+        },
+        {
+          "w": "login",
+          "start": 34.34,
+          "end": 34.62
+        },
+        {
+          "w": "page",
+          "start": 34.62,
+          "end": 34.96
+        },
+        {
+          "w": "this",
+          "start": 34.96,
+          "end": 35.18
+        },
+        {
+          "w": "week?",
+          "start": 35.18,
+          "end": 35.62
+        },
+        {
+          "w": "Let's",
+          "start": 36.26,
+          "end": 36.64
+        }
+      ]
+    },
+    {
+      "seg_id": 8,
+      "start": 36.56,
+      "end": 39.56,
+      "text": "Let's not, there isn't enough time.",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "not,",
+          "start": 36.64,
+          "end": 37.5
+        },
+        {
+          "w": "there",
+          "start": 37.5,
+          "end": 37.76
+        },
+        {
+          "w": "isn't",
+          "start": 37.76,
+          "end": 38.22
+        },
+        {
+          "w": "enough",
+          "start": 38.22,
+          "end": 38.5
+        },
+        {
+          "w": "time.",
+          "start": 38.5,
+          "end": 39.06
+        }
+      ]
+    },
+    {
+      "seg_id": 9,
+      "start": 39.56,
+      "end": 41.98,
+      "text": "Fine, no login this week.",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "Fine,",
+          "start": 39.3,
+          "end": 39.84
+        },
+        {
+          "w": "no",
+          "start": 39.84,
+          "end": 40.56
+        },
+        {
+          "w": "login",
+          "start": 40.56,
+          "end": 40.9
+        },
+        {
+          "w": "this",
+          "start": 40.9,
+          "end": 41.34
+        },
+        {
+          "w": "week.",
+          "start": 41.34,
+          "end": 41.8
+        }
+      ]
+    },
+    {
+      "seg_id": 10,
+      "start": 41.98,
+      "end": 46.56,
+      "text": "We also can't open registrations until API is ready.",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "We",
+          "start": 41.48,
+          "end": 42.58
+        },
+        {
+          "w": "also",
+          "start": 42.58,
+          "end": 42.9
+        },
+        {
+          "w": "can't",
+          "start": 42.9,
+          "end": 43.34
+        },
+        {
+          "w": "open",
+          "start": 43.34,
+          "end": 43.58
+        },
+        {
+          "w": "registrations",
+          "start": 43.58,
+          "end": 44.36
+        },
+        {
+          "w": "until",
+          "start": 44.36,
+          "end": 44.86
+        },
+        {
+          "w": "API",
+          "start": 44.86,
+          "end": 45.3
+        },
+        {
+          "w": "is",
+          "start": 45.3,
+          "end": 45.66
+        },
+        {
+          "w": "ready.",
+          "start": 45.66,
+          "end": 46.44
+        }
+      ]
+    },
+    {
+      "seg_id": 11,
+      "start": 46.56,
+      "end": 51.92,
+      "text": "Rahul, can you finish the API and push it to GitHub by Friday?",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "Rahul,",
+          "start": 46.92,
+          "end": 47.8
+        },
+        {
+          "w": "can",
+          "start": 47.8,
+          "end": 47.94
+        },
+        {
+          "w": "you",
+          "start": 47.94,
+          "end": 48.06
+        },
+        {
+          "w": "finish",
+          "start": 48.06,
+          "end": 48.64
+        },
+        {
+          "w": "the",
+          "start": 48.64,
+          "end": 48.88
+        },
+        {
+          "w": "API",
+          "start": 48.88,
+          "end": 49.22
+        },
+        {
+          "w": "and",
+          "start": 49.22,
+          "end": 49.62
+        },
+        {
+          "w": "push",
+          "start": 49.62,
+          "end": 49.98
+        },
+        {
+          "w": "it",
+          "start": 49.98,
+          "end": 50.2
+        },
+        {
+          "w": "to",
+          "start": 50.2,
+          "end": 50.36
+        },
+        {
+          "w": "GitHub",
+          "start": 50.36,
+          "end": 50.68
+        },
+        {
+          "w": "by",
+          "start": 50.68,
+          "end": 51.06
+        },
+        {
+          "w": "Friday?",
+          "start": 51.06,
+          "end": 51.8
+        }
+      ]
+    },
+    {
+      "seg_id": 12,
+      "start": 51.92,
+      "end": 54.24,
+      "text": "Yes, I'll do that, says Rahul.",
+      "speaker": null,
+      "avg_logprob": -0.32746434,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.5132743,
+      "words": [
+        {
+          "w": "Yes,",
+          "start": 51.42,
+          "end": 52.68
+        },
+        {
+          "w": "I'll",
+          "start": 52.68,
+          "end": 52.8
+        },
+        {
+          "w": "do",
+          "start": 52.8,
+          "end": 52.9
+        },
+        {
+          "w": "that,",
+          "start": 52.9,
+          "end": 53.58
+        },
+        {
+          "w": "says",
+          "start": 53.58,
+          "end": 53.92
+        }
+      ]
+    },
+    {
+      "seg_id": 13,
+      "start": 54.24,
+      "end": 61.24,
+      "text": "Someone should check if the wifi in the hall works.",
+      "speaker": null,
+      "avg_logprob": -0.30020592,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.3037975,
+      "words": [
+        {
+          "w": "Rahul.",
+          "start": 53.92,
+          "end": 54.68
+        },
+        {
+          "w": "Someone",
+          "start": 56.08,
+          "end": 56.32
+        },
+        {
+          "w": "should",
+          "start": 56.32,
+          "end": 57.16
+        },
+        {
+          "w": "check",
+          "start": 57.16,
+          "end": 57.58
+        },
+        {
+          "w": "if",
+          "start": 57.58,
+          "end": 58.26
+        },
+        {
+          "w": "the",
+          "start": 58.26,
+          "end": 58.94
+        },
+        {
+          "w": "wifi",
+          "start": 58.94,
+          "end": 59.16
+        },
+        {
+          "w": "in",
+          "start": 59.16,
+          "end": 59.42
+        },
+        {
+          "w": "the",
+          "start": 59.42,
+          "end": 59.58
+        },
+        {
+          "w": "hall",
+          "start": 59.58,
+          "end": 59.78
+        },
+        {
+          "w": "works.",
+          "start": 59.78,
+          "end": 61.14
+        }
+      ]
+    },
+    {
+      "seg_id": 14,
+      "start": 61.24,
+      "end": 65.24,
+      "text": "Sneha, please make the poster by Wednesday.",
+      "speaker": null,
+      "avg_logprob": -0.30020592,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.3037975,
+      "words": [
+        {
+          "w": "Sneha,",
+          "start": 61.7,
+          "end": 62.32
+        },
+        {
+          "w": "please",
+          "start": 62.32,
+          "end": 63.06
+        },
+        {
+          "w": "make",
+          "start": 63.06,
+          "end": 63.34
+        },
+        {
+          "w": "the",
+          "start": 63.34,
+          "end": 63.54
+        },
+        {
+          "w": "poster",
+          "start": 63.54,
+          "end": 63.84
+        },
+        {
+          "w": "by",
+          "start": 63.84,
+          "end": 64.04
+        },
+        {
+          "w": "Wednesday.",
+          "start": 64.04,
+          "end": 65.04
+        }
+      ]
+    },
+    {
+      "seg_id": 15,
+      "start": 65.24,
+      "end": 68.24,
+      "text": "And do we give prizes in cash or vouchers?",
+      "speaker": null,
+      "avg_logprob": -0.30020592,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.3037975,
+      "words": [
+        {
+          "w": "And",
+          "start": 65.24,
+          "end": 65.76
+        },
+        {
+          "w": "do",
+          "start": 65.76,
+          "end": 66.32
+        },
+        {
+          "w": "we",
+          "start": 66.32,
+          "end": 66.54
+        },
+        {
+          "w": "give",
+          "start": 66.54,
+          "end": 66.78
+        },
+        {
+          "w": "prizes",
+          "start": 66.78,
+          "end": 67.22
+        },
+        {
+          "w": "in",
+          "start": 67.22,
+          "end": 67.44
+        },
+        {
+          "w": "cash",
+          "start": 67.44,
+          "end": 67.7
+        },
+        {
+          "w": "or",
+          "start": 67.7,
+          "end": 67.88
+        },
+        {
+          "w": "vouchers?",
+          "start": 67.88,
+          "end": 68.5
+        }
+      ]
+    },
+    {
+      "seg_id": 16,
+      "start": 68.24,
+      "end": 70.24,
+      "text": "Let's decide that next meeting.",
+      "speaker": null,
+      "avg_logprob": -0.30020592,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.3037975,
+      "words": [
+        {
+          "w": "Let's",
+          "start": 68.26,
+          "end": 68.92
+        },
+        {
+          "w": "decide",
+          "start": 68.92,
+          "end": 69.22
+        },
+        {
+          "w": "that",
+          "start": 69.22,
+          "end": 69.46
+        },
+        {
+          "w": "next",
+          "start": 69.46,
+          "end": 69.7
+        },
+        {
+          "w": "meeting.",
+          "start": 69.7,
+          "end": 70.36
+        }
+      ]
+    },
+    {
+      "seg_id": 17,
+      "start": 70.24,
+      "end": 72.24,
+      "text": "Okay, that's all.",
+      "speaker": null,
+      "avg_logprob": -0.30020592,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.3037975,
+      "words": [
+        {
+          "w": "Okay,",
+          "start": 70.92,
+          "end": 71.58
+        },
+        {
+          "w": "that's",
+          "start": 71.58,
+          "end": 72.0
+        },
+        {
+          "w": "all.",
+          "start": 72.0,
+          "end": 72.34
+        }
+      ]
+    },
+    {
+      "seg_id": 18,
+      "start": 72.24,
+      "end": 73.24,
+      "text": "Thanks everyone.",
+      "speaker": null,
+      "avg_logprob": -0.30020592,
+      "no_speech_prob": 0,
+      "compression_ratio": 1.3037975,
+      "words": [
+        {
+          "w": "Thanks",
+          "start": 71.74,
+          "end": 72.76
+        },
+        {
+          "w": "everyone.",
+          "start": 72.76,
+          "end": 73.34
+        }
+      ]
+    }
+  ],
+  "run_id": "2026-10-08T19-22-40_966a9f",
+  "audio": {
+    "file": "Meeting_recording.m4a",
+    "duration_s": 73.81
+  }
+}
