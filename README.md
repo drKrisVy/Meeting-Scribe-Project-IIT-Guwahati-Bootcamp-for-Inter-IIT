@@ -29,7 +29,7 @@ upload → validate → transcribe → refine → document → export
 | Export | `render.py`, `templates/` | minutes.md, minutes.html, minutes.pdf and a zip of the run |
 
 `pipeline.py` runs the stages in order and `app.py` is the web UI.
-Models and data flow are explained in [TECHNICAL_DESCRIPTION.md](TECHNICAL_DESCRIPTION.md).
+Models and data flow are explained in [TECHNICAL_REPORT.md](TECHNICAL_REPORT.md).
 
 ## Setup (Mac)
 
