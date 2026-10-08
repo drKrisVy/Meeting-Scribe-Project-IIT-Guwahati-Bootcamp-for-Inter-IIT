@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "run_id": "2026-10-08T19-22-40_966a9f",
+  "run_id": "2026-10-08T19-27-58_966a9f",
   "models": {
     "stt": "whisper-large-v3-turbo",
     "refiner": "openai/gpt-oss-120b",
     "documenter": "openai/gpt-oss-120b"
   },
-  "summary": "The meeting covered venue capacity, registration setup, frontend technology, login page timing, API readiness, Wi\u2011Fi, poster creation, and prize format. It was agreed to use React for the frontend and host it on Vercel, while using Firebase for registrations and skipping the login page this week remain proposed. Rahul will finish the API and push it to GitHub by Friday, Sneha will create the poster by Wednesday, and the Wi\u2011Fi in the hall will be checked. The decision on whether prizes will be cash or vouchers is still open and will be decided at the next meeting.",
+  "summary": "The meeting covered venue capacity (60 seats) and registration setup, proposing to use Firebase for registrations. The team agreed to use React for the frontend and host it on Vercel, and also agreed not to add a login page this week. Rahul will finish the API and push it to GitHub by Friday, enabling registrations once ready. Sneha will create the poster by Wednesday and someone will check the hall's Wi\u2011Fi. The decision on giving prizes in cash or vouchers is still open for the next meeting.",
   "summary_problems": [],
   "decisions": [
     {
@@ -48,17 +48,23 @@
     {
       "id": "D3",
       "text": "Do not add a login page this week",
-      "status": "proposed",
+      "status": "agreed",
       "evidence": [
         {
           "seg_id": 8,
           "role": "statement",
           "quote": "Let's not, there isn't enough time.",
           "t": 36.56
+        },
+        {
+          "seg_id": 9,
+          "role": "acceptance",
+          "quote": "Fine, no login this week.",
+          "t": 39.56
         }
       ],
       "flags": [
-        "agreed_without_acceptance"
+        "acceptance_found_after"
       ],
       "verified": true
     }

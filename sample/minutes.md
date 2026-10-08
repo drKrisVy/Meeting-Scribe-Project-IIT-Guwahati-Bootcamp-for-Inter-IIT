@@ -2,13 +2,13 @@
 
 - **File:** Meeting_recording.m4a
 - **Duration:** 01:13
-- **Run:** 2026-10-08T19-22-40_966a9f
+- **Run:** 2026-10-08T19-27-58_966a9f
 - **Models:** speech-to-text `whisper-large-v3-turbo`, refiner `openai/gpt-oss-120b`, documenter `openai/gpt-oss-120b`
 
 
 ## Summary
 
-The meeting covered venue capacity, registration setup, frontend technology, login page timing, API readiness, Wi‑Fi, poster creation, and prize format. It was agreed to use React for the frontend and host it on Vercel, while using Firebase for registrations and skipping the login page this week remain proposed. Rahul will finish the API and push it to GitHub by Friday, Sneha will create the poster by Wednesday, and the Wi‑Fi in the hall will be checked. The decision on whether prizes will be cash or vouchers is still open and will be decided at the next meeting.
+The meeting covered venue capacity (60 seats) and registration setup, proposing to use Firebase for registrations. The team agreed to use React for the frontend and host it on Vercel, and also agreed not to add a login page this week. Rahul will finish the API and push it to GitHub by Friday, enabling registrations once ready. Sneha will create the poster by Wednesday and someone will check the hall's Wi‑Fi. The decision on giving prizes in cash or vouchers is still open for the next meeting.
 
 ## Minutes
 
@@ -49,12 +49,13 @@ The meeting covered venue capacity, registration setup, frontend technology, log
 - **D2** Use React for frontend and host on Vercel
   - [00:25] "For the frontend, let's go with React and hosted on Vercel. Yes"
   - [00:30] "agreed, React and Vercel."
+- **D3** Do not add a login page this week
+  - [00:36] "Let's not, there isn't enough time."
+  - [00:39] "Fine, no login this week."
 
 ### Proposed, not agreed
 - **D1** Use Firebase for registrations
   - [00:12] "what if we use Firebase for registrations?"
-- **D3** Do not add a login page this week
-  - [00:36] "Let's not, there isn't enough time."
 
 ### Open questions
 - **Q1** Give prizes in cash or vouchers
@@ -71,4 +72,4 @@ The meeting covered venue capacity, registration setup, frontend technology, log
 
 ## Needs review
 
-- **D3** Do not add a login page this week: agreed_without_acceptance
+Nothing needs review.
