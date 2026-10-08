@@ -47,7 +47,7 @@ def render_minutes(record, transcript, edits):
     all_items = decisions + record["action_items"] + record["open_questions"]
     flagged_items = []
     for item in all_items:
-        flags = [f for f in item.get("flags", []) if f != "repaired"]
+        flags = [f for f in item.get("flags", []) if f not in ("repaired", "acceptance_found_after")]
         if flags:
             flagged_items.append({**item, "flags": flags})
     flagged_edits = [e for e in edits if e["status"] == "flagged"]

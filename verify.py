@@ -13,6 +13,10 @@ QUOTE_ELSEWHERE_MIN = 95
 SAME_ITEM_MIN = 85
 
 FIRST_PERSON = ["i'll", "i will", "let me", "i can take", "i can do", "i'm on it", "i am on it"]
+ACCEPT_STARTS = ["yes", "yeah", "yep", "okay", "ok", "sure", "agreed", "fine", "deal",
+                 "sounds good", "makes sense", "let's do", "go ahead", "works for me", "done"]
+PUTTING_OFF = ["later", "maybe", "not sure", "decide", "think about", "next week",
+               "next meeting", "let me check"]
 SENTENCE_STARTERS = {"someone", "everyone", "nobody", "the", "team", "next", "finally",
                      "overall", "both", "after", "before", "later", "also"}
 ACCEPTANCE_WORDS = ["yes", "yeah", "yep", "okay", "ok", "sure", "agreed", "agree",
@@ -90,6 +94,21 @@ def contains_phrase(phrase, text):
     return re.search(rf"\b{re.escape(phrase)}\b", normalize(text)) is not None
 
 
+def find_reply(evidence, segments_by_id):
+    last = max(ev["seg_id"] for ev in evidence)
+    for seg_id in [last + 1, last + 2]:
+        seg = segments_by_id.get(seg_id)
+        if seg is None:
+            continue
+        text = normalize(seg["text"])
+        if any(contains_phrase(p, text) for p in PUTTING_OFF):
+            return None
+        if any(text == a or text.startswith(a + " ") for a in ACCEPT_STARTS):
+            return {"seg_id": seg_id, "role": "acceptance", "quote": seg["text"],
+                    "t": seg["start"]}
+    return None
+
+
 def verify_item(item, segments_by_id):
     item["flags"] = []
 
@@ -107,6 +126,15 @@ def verify_item(item, segments_by_id):
             if not any(contains_phrase(w, ev["quote"]) for w in ACCEPTANCE_WORDS):
                 ev["role"] = "statement"
                 item["flags"].append(f"acceptance_without_agreement: {ev['quote']!r}")
+
+    # the model sometimes quotes the proposal but forgets the "fine" right after it,
+    # so look at the next two lines ourselves
+    if item.get("status") == "agreed" and good and \
+            not any(ev.get("role") == "acceptance" for ev in good):
+        reply = find_reply(good, segments_by_id)
+        if reply:
+            good.append(reply)
+            item["flags"].append("acceptance_found_after")
 
     quotes = [ev["quote"] for ev in good]
     roles = [ev.get("role") for ev in good]

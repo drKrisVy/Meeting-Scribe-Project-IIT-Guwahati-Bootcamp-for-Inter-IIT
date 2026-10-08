@@ -135,7 +135,7 @@ def review_html(record, edits, segments_by_id):
     rows += [f"<p>Summary: {html.escape(p)}</p>" for p in record.get("summary_problems", [])]
     for key in ["decisions", "action_items", "open_questions"]:
         for item in record[key]:
-            flags = [f for f in item.get("flags", []) if f != "repaired"]
+            flags = [f for f in item.get("flags", []) if f not in ("repaired", "acceptance_found_after")]
             if flags:
                 rows.append(f"<p>{ts(item['evidence'][0]['t'])}<b>{item['id']}</b> "
                             f"{html.escape(item.get('text') or item.get('task'))}: "
