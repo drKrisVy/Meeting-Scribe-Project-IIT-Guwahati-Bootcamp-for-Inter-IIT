@@ -11,3 +11,6 @@ edits_fakes.json
 refined_transcript_fakes.json
 record_fakes.json
 validate_out/
+.DS_Store
+# outputs from running single scripts by hand (real runs go in runs/)
+/*.json
