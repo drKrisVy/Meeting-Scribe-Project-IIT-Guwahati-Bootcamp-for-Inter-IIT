@@ -185,9 +185,14 @@ def check_supported(original, replacement, support):
     if normalize(original).replace(" ", "") == normalize(replacement).replace(" ", ""):
         return None
     original_words = set(normalize(original).split())
+    original_sounds = {jellyfish.metaphone(w) for w in original_words}
     for word in normalize(replacement).split():
-        if word not in original_words and word not in support:
-            return "unsupported_term"
+        if word in original_words or word in support:
+            continue
+        # by -> buy, their -> there: same sound, so not an invented word
+        if jellyfish.metaphone(word) in original_sounds:
+            continue
+        return "unsupported_term"
     return None
 
 
@@ -266,6 +271,8 @@ if __name__ == "__main__":
         ("cube and eighties", "Kubernetes", None),
         ("pria", "Priya", None),
         ("budget", "budgets", "unsupported_term"),
+        ("by", "buy", None),
+        ("their", "there", None),
         ("kuberneteslogs", "kubernetes logs", None),
     ])
 

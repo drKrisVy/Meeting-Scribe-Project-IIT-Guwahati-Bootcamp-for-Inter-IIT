@@ -20,12 +20,25 @@ A * after the seg_id means recognition confidence was low there.
 Lines under "CONTEXT" are only there to help you understand; never edit them.
 "TERMS" lists checked domain terms for this meeting; prefer those spellings.
 
-Fix only words that were clearly misheard: technical terms, names, acronyms,
-words that sound alike, and words wrongly split or merged.
+Fix words that speech recognition got wrong: technical terms, names, acronyms,
+words that sound alike but make no sense in the sentence (to/the, by/buy, their/there),
+and words wrongly split or merged. Use the meeting's context to spot them.
 
-Never change grammar, filler words, numbers, negations (not, can't, never),
-or words like will, should, must, can.
+Don't touch grammar the speaker actually used, filler words, numbers, negations
+(not, can't, never), or words like will, should, must, can.
 Never rephrase. If you are unsure, propose nothing. An empty list is a valid answer.
+
+Good edits:
+- "we deploy on cube and eighties" -> "cube and eighties" becomes "Kubernetes"
+- "we need to by more servers" -> "by" becomes "buy"
+- "check the a p i logs" -> "a p i" becomes "API"
+- "push it to get hub" -> "get hub" becomes "GitHub"
+- "kuberneteslogs" -> "Kubernetes logs"
+
+Edits you must NOT make:
+- "we can't ship" -> "we can ship" (changes a negation)
+- "fifteen" -> "fifty" or "fifteen" -> "15" (changes or reformats a number)
+- "gonna" -> "going to" (polishing, not a mistake)
 
 Each edit replaces a small run of words: at most 4 words in, at most 4 words out.
 start_word is the number of the first word to replace.
