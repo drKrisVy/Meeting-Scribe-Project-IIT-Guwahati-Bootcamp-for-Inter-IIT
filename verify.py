@@ -3,7 +3,7 @@ import json
 import re
 import sys
 
-from rapidfuzz.fuzz import partial_ratio_alignment, token_set_ratio
+from rapidfuzz.fuzz import partial_ratio_alignment, ratio, token_set_ratio
 from rapidfuzz.utils import default_process
 
 from guardrails import COMMON_WORDS, normalize, split_numbers
@@ -28,12 +28,29 @@ def snap_to_words(text, start, end):
     return text[start:end].strip()
 
 
+def trim_edges(exact, quote):
+    # the match can grab one word too many when a segment holds two sentences
+    # ("...on Vercel. Yes"), so drop edge words the quote doesn't have
+    quote_words = normalize(quote).split()
+
+    def in_quote(word):
+        word = normalize(word)
+        return any(ratio(word, q) >= 75 for q in quote_words)
+
+    words = exact.split()
+    while len(words) > 1 and not in_quote(words[-1]):
+        words.pop()
+    while len(words) > 1 and not in_quote(words[0]):
+        words.pop(0)
+    return " ".join(words)
+
+
 def match_in_segment(quote, seg):
     text = seg["text"]
     if len(quote) > len(text) + 5:
         return 0, None
     result = partial_ratio_alignment(quote.lower(), text.lower())
-    exact = snap_to_words(text, result.dest_start, result.dest_end)
+    exact = trim_edges(snap_to_words(text, result.dest_start, result.dest_end), quote)
     return result.score, exact
 
 
@@ -227,7 +244,7 @@ def check_summary(summary, transcript):
     if not summary:
         return ["the summary is empty"]
     said = " ".join(seg["text"] for seg in transcript["segments"])
-    said_words = set(normalize(said).split())
+    said_words = set(re.findall(r"[a-z]+", said.lower()))
     said_numbers = set(split_numbers(said)[0])
     problems = []
 

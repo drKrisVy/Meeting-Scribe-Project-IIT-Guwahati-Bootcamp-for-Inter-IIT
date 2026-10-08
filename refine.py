@@ -163,7 +163,21 @@ def consistency_edits(transcript, terms, accepted):
     return new_edits
 
 
+DASHES = {"\u2010": "-", "\u2011": "-", "\u2012": "-", "\u2013": "-", "\u2014": "-"}
+
+
+def plain_characters(edits):
+    # models sometimes write Wi‑Fi with a special hyphen; keep plain text
+    for edit in edits:
+        for key in ["original", "replacement"]:
+            text = edit.get(key) or ""
+            for odd, normal in DASHES.items():
+                text = text.replace(odd, normal)
+            edit[key] = text
+
+
 def decide_statuses(edits, segments_by_id, support=None, transcript=None, terms=()):
+    plain_characters(edits)
     accepted = []
 
     for i, edit in enumerate(edits):
